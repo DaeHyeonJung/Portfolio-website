@@ -164,8 +164,8 @@
       z-index: 20;
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      width: 180px;
-      padding: 4px;
+      width: 136px;
+      padding: 3px;
       border: 1px solid var(--toggle-border);
       border-radius: 999px;
       background: var(--toggle-shell);
@@ -180,10 +180,10 @@
     .theme-toggle::before {
       content: "";
       position: absolute;
-      top: 4px;
-      left: 4px;
-      width: calc(50% - 4px);
-      height: calc(100% - 8px);
+      top: 3px;
+      left: 3px;
+      width: calc(50% - 3px);
+      height: calc(100% - 6px);
       border-radius: 999px;
       background: var(--toggle-pill);
       transform: translateX(0);
@@ -197,12 +197,11 @@
     .theme-toggle-label {
       position: relative;
       z-index: 1;
-      padding: 9px 0;
+      padding: 7px 0;
       color: var(--muted);
-      font-size: 0.72rem;
+      font-size: 0.66rem;
       font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
+      letter-spacing: 0.02em;
       transition: color 0.25s ease, opacity 0.25s ease;
     }
 
@@ -564,6 +563,8 @@
       white-space: normal;
       overflow: visible;
       text-overflow: clip;
+      font-size: 1rem;
+      line-height: 1.4;
     }
 
     .achievement-toggle,
@@ -601,7 +602,7 @@
 
     .research-detail p {
       color: var(--ink);
-      font-size: 1.02rem;
+      font-size: 1.08rem;
       line-height: 1.72;
     }
 
@@ -611,7 +612,7 @@
       gap: 8px;
       margin-bottom: 7px;
       color: var(--ink);
-      font-size: 0.92rem;
+      font-size: 0.98rem;
       font-weight: 700;
       letter-spacing: 0.02em;
     }
@@ -653,7 +654,7 @@
 
     .research-meta {
       margin: 4px 0 0;
-      font-size: 0.84rem;
+      font-size: 0.92rem;
       line-height: 1.5;
     }
 
@@ -672,8 +673,12 @@
       border-radius: 999px;
       background: var(--chip-bg);
       color: var(--muted);
-      font-size: 0.72rem;
+      font-size: 0.8rem;
       line-height: 1.35;
+    }
+
+    .research-downloads .achievement-download {
+      font-size: 0.9rem;
     }
 
     .research-panel {
@@ -748,11 +753,12 @@
       .theme-toggle {
         top: 12px;
         right: 12px;
-        width: 160px;
+        width: 124px;
       }
 
       .theme-toggle-label {
-        font-size: 0.68rem;
+        padding: 6px 0;
+        font-size: 0.62rem;
       }
 
       .page {
@@ -787,9 +793,9 @@
   </style>
 </head>
 <body>
-  <button class="theme-toggle" type="button" data-theme="monochrome" aria-label="Switch to original color theme">
-    <span class="theme-toggle-label theme-toggle-label-light">Original</span>
-    <span class="theme-toggle-label theme-toggle-label-dark">B/W</span>
+  <button class="theme-toggle" type="button" data-theme="monochrome" aria-label="Switch to light theme">
+    <span class="theme-toggle-label theme-toggle-label-light">Light</span>
+    <span class="theme-toggle-label theme-toggle-label-dark">Dark</span>
   </button>
   <main class="page">
     <section class="card" aria-label="포트폴리오 카드">
@@ -941,20 +947,31 @@
               ]
             },
             {
-              title: "논문 또는 프로젝트 02",
-              meta: "논문 제목 / 학회 또는 게재 정보",
-              details: [
-                "논문 제목, 발표 학회, 게재지, 연도 등 핵심 메타 정보를 적어주세요.",
-                "요약, 기여도, 사용 기술을 간단히 추가하면 논문 내역을 보기 쉬워집니다."
+              title: "항공 영상의 의미론적 영상 분할 기법을 활용한 전차 궤도 타격 지점 추정 연구",
+              meta: "2026 항공우주학회 춘계학술대회 / 2026.03.31 ~ 2026.04.03",
+              keywords: [
+                "UAV(무인항공기)",
+                "Semantic Segmentation(의미론적 분할)",
+                "Deep Learning(딥러닝)",
+                "Target Selection(타격 선정)",
+                "Image-Based Recognition(영상 기반 인식)"
+              ],
+              details: [],
+              links: [
+                {
+                  href: "연구/2/한국항공우주학회 2026 춘계학술대회 논문.pdf",
+                  label: "한국항공우주학회 2026 춘계학술대회 논문 PDF"
+                },
+                {
+                  href: "연구/2/한국항공우주학회 2026 춘계학술대회.pdf",
+                  label: "한국항공우주학회 2026 춘계학술대회 PDF"
+                }
               ]
             },
             {
-              title: "후속 연구 03",
-              meta: "진행 중인 주제 / 확장 계획",
-              details: [
-                "현재 진행 중인 시뮬레이션, 테스트, 데이터 수집 내용을 정리해주세요.",
-                "향후 확장 계획이나 기대 효과를 함께 적으면 석사 연구 흐름이 자연스럽게 연결됩니다."
-              ]
+              title: "가상환경 기반 군 차량 인식 및 의미론적 분할을 통한 타격 지점 추정 연구",
+              meta: "항공우주시스템공학회지(KCI) / 2026.02 ~",
+              details: []
             }
           ]
         }
@@ -968,7 +985,7 @@
           themeToggle.dataset.theme = nextTheme;
           themeToggle.setAttribute(
             "aria-label",
-            nextTheme === "light" ? "Switch to black and white theme" : "Switch to original color theme"
+            nextTheme === "light" ? "Switch to dark theme" : "Switch to light theme"
           );
         }
       };
@@ -1093,6 +1110,9 @@
         <div class="research-list">
           ${items.map((item, index) => {
             const detailId = `research-detail-${index}`;
+            const hasDetails = Boolean(item.details && item.details.length);
+            const hasLinks = Boolean(item.links && item.links.length);
+            const hasExtraContent = hasDetails || hasLinks;
             return `
               <article class="research-item">
                 <div class="research-head">
@@ -1104,12 +1124,15 @@
                       : ""
                     }
                   </div>
-                  ${renderToggleButton("research-toggle", detailId)}
+                  ${hasExtraContent ? renderToggleButton("research-toggle", detailId) : ""}
                 </div>
-                <div class="research-detail" id="${detailId}" hidden>
-                  ${item.details.map((detail) => `<p>${detail}</p>`).join("")}
-                  ${renderResourceLinks(item.links, "research-downloads", "blank")}
-                </div>
+                ${hasExtraContent
+                  ? `<div class="research-detail" id="${detailId}" hidden>
+                      ${item.details.map((detail) => `<p>${detail}</p>`).join("")}
+                      ${renderResourceLinks(item.links, "research-downloads", "blank")}
+                    </div>`
+                  : ""
+                }
               </article>
             `;
           }).join("")}
