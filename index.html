@@ -1,0 +1,1241 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio Card</title>
+  <style>
+    @font-face {
+      font-family: "Paperlogy";
+      src: url("fonts/Paperlogy-4Regular.ttf") format("truetype");
+      font-weight: 400;
+      font-style: normal;
+    }
+
+    @font-face {
+      font-family: "Paperlogy";
+      src: url("fonts/Paperlogy-6SemiBold.ttf") format("truetype");
+      font-weight: 600;
+      font-style: normal;
+    }
+
+    @font-face {
+      font-family: "Paperlogy";
+      src: url("fonts/Paperlogy-7Bold.ttf") format("truetype");
+      font-weight: 700;
+      font-style: normal;
+    }
+
+    :root {
+      color-scheme: dark;
+      --bg: #111111;
+      --bg-deep: #020202;
+      --ink: #f5f5f1;
+      --muted: #a6a6a1;
+      --panel: rgba(18, 18, 18, 0.86);
+      --line: rgba(255, 255, 255, 0.1);
+      --accent: #f1f1ec;
+      --accent-soft: rgba(255, 255, 255, 0.14);
+      --shadow: 0 34px 100px rgba(0, 0, 0, 0.58);
+      --body-glow-1: rgba(255, 255, 255, 0.08);
+      --body-glow-2: rgba(255, 255, 255, 0.05);
+      --body-orb-1: rgba(255, 255, 255, 0.08);
+      --body-orb-2: rgba(255, 255, 255, 0.06);
+      --card-border: rgba(255, 255, 255, 0.12);
+      --card-bg-start: rgba(20, 20, 20, 0.96);
+      --card-bg-end: rgba(6, 6, 6, 0.92);
+      --card-inner-line: rgba(255, 255, 255, 0.05);
+      --panel-bg-start: rgba(19, 19, 19, 0.92);
+      --panel-bg-end: rgba(11, 11, 11, 0.86);
+      --panel-inner-line: rgba(255, 255, 255, 0.04);
+      --panel-glow: rgba(255, 255, 255, 0.06);
+      --portrait-border: rgba(255, 255, 255, 0.12);
+      --portrait-bg-start: rgba(28, 28, 28, 0.94);
+      --portrait-bg-end: rgba(12, 12, 12, 0.9);
+      --contact-bg: rgba(24, 24, 24, 0.94);
+      --timeline-fade: rgba(255, 255, 255, 0.06);
+      --item-bg-start: rgba(24, 24, 24, 0.9);
+      --item-bg-end: rgba(14, 14, 14, 0.88);
+      --chip-border: rgba(255, 255, 255, 0.12);
+      --chip-bg: rgba(30, 30, 30, 0.96);
+      --chip-hover: rgba(255, 255, 255, 0.12);
+      --download-text: #0a0a0a;
+      --toggle-shell: rgba(14, 14, 14, 0.82);
+      --toggle-border: rgba(255, 255, 255, 0.12);
+      --toggle-pill: rgba(255, 255, 255, 0.12);
+      --radius-xl: 30px;
+      --radius-lg: 22px;
+      --radius-md: 16px;
+    }
+
+    body[data-theme="light"] {
+      color-scheme: light;
+      --bg: #edf2f6;
+      --bg-deep: #dfe7ee;
+      --ink: #1f2933;
+      --muted: #627181;
+      --panel: rgba(248, 251, 253, 0.82);
+      --line: rgba(84, 98, 113, 0.14);
+      --accent: #5f768c;
+      --accent-soft: rgba(95, 118, 140, 0.14);
+      --shadow: 0 22px 60px rgba(31, 41, 51, 0.12);
+      --body-glow-1: rgba(95, 118, 140, 0.14);
+      --body-glow-2: rgba(31, 41, 51, 0.07);
+      --body-orb-1: rgba(95, 118, 140, 0.12);
+      --body-orb-2: rgba(31, 41, 51, 0.08);
+      --card-border: rgba(255, 255, 255, 0.7);
+      --card-bg-start: rgba(255, 255, 255, 0.84);
+      --card-bg-end: rgba(240, 245, 249, 0.72);
+      --card-inner-line: rgba(255, 255, 255, 0.3);
+      --panel-bg-start: rgba(248, 251, 253, 0.88);
+      --panel-bg-end: rgba(236, 242, 246, 0.78);
+      --panel-inner-line: rgba(255, 255, 255, 0.45);
+      --panel-glow: rgba(95, 118, 140, 0.09);
+      --portrait-border: rgba(84, 98, 113, 0.18);
+      --portrait-bg-start: rgba(255, 255, 255, 0.82);
+      --portrait-bg-end: rgba(239, 244, 248, 0.72);
+      --contact-bg: rgba(255, 255, 255, 0.82);
+      --timeline-fade: rgba(95, 118, 140, 0.08);
+      --item-bg-start: rgba(255, 255, 255, 0.78);
+      --item-bg-end: rgba(244, 248, 251, 0.7);
+      --chip-border: rgba(84, 98, 113, 0.16);
+      --chip-bg: rgba(255, 255, 255, 0.92);
+      --chip-hover: rgba(95, 118, 140, 0.1);
+      --download-text: #ffffff;
+      --toggle-shell: rgba(248, 251, 253, 0.88);
+      --toggle-border: rgba(84, 98, 113, 0.16);
+      --toggle-pill: rgba(95, 118, 140, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      height: 100%;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      min-height: 100dvh;
+      font-family: "Paperlogy", "Noto Sans KR", "Malgun Gothic", sans-serif;
+      font-weight: 400;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, var(--body-glow-1), transparent 28%),
+        radial-gradient(circle at bottom right, var(--body-glow-2), transparent 30%),
+        linear-gradient(135deg, var(--bg), var(--bg-deep));
+      position: relative;
+      overflow-x: hidden;
+      overflow-y: hidden;
+    }
+
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      inset: auto;
+      border-radius: 999px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    body::before {
+      width: 420px;
+      height: 420px;
+      top: -110px;
+      right: -120px;
+      background: radial-gradient(circle, var(--body-orb-1), transparent 68%);
+    }
+
+    body::after {
+      width: 360px;
+      height: 360px;
+      bottom: -120px;
+      left: -80px;
+      background: radial-gradient(circle, var(--body-orb-2), transparent 70%);
+    }
+
+    .theme-toggle {
+      position: fixed;
+      top: 18px;
+      right: 18px;
+      z-index: 20;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      width: 180px;
+      padding: 4px;
+      border: 1px solid var(--toggle-border);
+      border-radius: 999px;
+      background: var(--toggle-shell);
+      box-shadow: 0 18px 42px rgba(0, 0, 0, 0.18);
+      backdrop-filter: blur(16px);
+      font: inherit;
+      cursor: pointer;
+      overflow: hidden;
+      appearance: none;
+    }
+
+    .theme-toggle::before {
+      content: "";
+      position: absolute;
+      top: 4px;
+      left: 4px;
+      width: calc(50% - 4px);
+      height: calc(100% - 8px);
+      border-radius: 999px;
+      background: var(--toggle-pill);
+      transform: translateX(0);
+      transition: transform 0.28s ease, background 0.28s ease;
+    }
+
+    .theme-toggle[data-theme="monochrome"]::before {
+      transform: translateX(100%);
+    }
+
+    .theme-toggle-label {
+      position: relative;
+      z-index: 1;
+      padding: 9px 0;
+      color: var(--muted);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: color 0.25s ease, opacity 0.25s ease;
+    }
+
+    .theme-toggle[data-theme="light"] .theme-toggle-label-light,
+    .theme-toggle[data-theme="monochrome"] .theme-toggle-label-dark {
+      color: var(--ink);
+    }
+
+    .theme-toggle:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 4px;
+    }
+
+    .page {
+      position: relative;
+      z-index: 1;
+      width: min(1720px, calc(100% - 4px));
+      height: auto;
+      min-height: 100vh;
+      min-height: 100dvh;
+      margin: 0 auto;
+      padding: 4px 0;
+      display: grid;
+      align-items: start;
+    }
+
+    .card {
+      display: grid;
+      grid-template-rows: auto auto;
+      gap: 10px;
+      height: auto;
+      min-height: 0;
+      align-content: start;
+      padding: clamp(12px, 1.6vw, 20px);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-xl);
+      background:
+        linear-gradient(145deg, var(--card-bg-start), var(--card-bg-end));
+      box-shadow: var(--shadow), inset 0 1px 0 var(--card-inner-line);
+      backdrop-filter: blur(12px);
+      overflow: hidden;
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: 1.04fr 0.66fr 1.82fr;
+      gap: 12px;
+      align-items: stretch;
+      min-height: 0;
+    }
+
+    .panel {
+      position: relative;
+      overflow: hidden;
+      min-height: 0;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      background: linear-gradient(180deg, var(--panel-bg-start), var(--panel-bg-end));
+      box-shadow: inset 0 1px 0 var(--panel-inner-line);
+      animation: rise 0.9s ease both;
+    }
+
+    .panel::after {
+      content: "";
+      position: absolute;
+      inset: auto -40px -40px auto;
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: radial-gradient(circle, var(--panel-glow), transparent 68%);
+      pointer-events: none;
+    }
+
+    .profile-panel {
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr);
+      gap: 10px;
+      min-height: 0;
+    }
+
+    .profile-panel .section-title {
+      margin-bottom: 0;
+      font-size: 1.04rem;
+    }
+
+    .profile-header {
+      display: grid;
+      grid-template-columns: minmax(168px, 188px) minmax(0, 1fr);
+      gap: 12px;
+      align-items: start;
+      min-height: 0;
+    }
+
+    .portrait {
+      width: min(100%, 188px);
+      height: auto;
+      aspect-ratio: 413 / 531;
+      border-radius: 20px;
+      overflow: hidden;
+      border: 1px solid var(--portrait-border);
+      background: linear-gradient(180deg, var(--portrait-bg-start), var(--portrait-bg-end));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      justify-self: start;
+      align-self: start;
+      text-align: center;
+    }
+
+    .portrait img {
+      width: 100%;
+      height: 100%;
+      max-height: none;
+      object-fit: cover;
+      object-position: center 12%;
+      transform: scale(1.08);
+      border-radius: 20px;
+      display: block;
+    }
+
+    .identity {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      gap: 6px;
+      min-height: 0;
+      align-self: start;
+      padding: 1px 0 0 6px;
+    }
+
+    .identity h2 {
+      margin: 0;
+      font-family: "Paperlogy", "Noto Sans KR", "Malgun Gothic", sans-serif;
+      font-weight: 700;
+      font-size: clamp(1.54rem, 1.95vw, 1.96rem);
+      line-height: 1.01;
+      letter-spacing: -0.05em;
+    }
+
+    .identity-name-en {
+      font-family: "Paperlogy", "Noto Sans KR", "Malgun Gothic", sans-serif;
+      font-weight: 600;
+      color: var(--muted);
+      font-size: 0.82rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .profile-keywords-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 3px 10px;
+      margin-top: 2px;
+    }
+
+    .profile-keywords-list span {
+      color: var(--muted);
+      font-size: 0.78rem;
+      line-height: 1.18;
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+    }
+
+    .contact-list {
+      display: grid;
+      gap: 6px;
+    }
+
+    .profile-panel .contact-list {
+      grid-template-columns: 1fr;
+      margin-top: 6px;
+      width: min(100%, 16.4rem);
+      max-width: none;
+      margin-left: auto;
+    }
+
+    .contact-item {
+      min-width: 0;
+      padding: 7px 12px 7px 10px;
+      border-radius: 12px;
+      background: var(--contact-bg);
+      border: 1px solid var(--line);
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 1.22;
+    }
+
+    .contact-item strong {
+      display: block;
+      margin-bottom: 1px;
+      font-weight: 600;
+      color: var(--ink);
+      font-size: 0.66rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .contact-value {
+      display: block;
+      color: inherit;
+      text-decoration: none;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+
+    .contact-item a.contact-value:hover {
+      text-decoration: underline;
+    }
+
+    .section-title {
+      margin: 0 0 14px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 12px;
+      font-weight: 600;
+      font-size: 0.98rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .section-title span:last-child {
+      color: var(--muted);
+      font-size: 0.78rem;
+      letter-spacing: 0.04em;
+      text-transform: none;
+    }
+
+    .education-panel {
+      display: grid;
+      align-content: start;
+    }
+
+    .timeline {
+      list-style: none;
+      margin: 0;
+      padding: 0 0 0 18px;
+      position: relative;
+      display: grid;
+      gap: 12px;
+    }
+
+    .education-panel .timeline {
+      gap: 18px;
+    }
+
+    .education-panel .timeline small {
+      font-size: 0.92rem;
+    }
+
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: 3px;
+      top: 3px;
+      bottom: 3px;
+      width: 2px;
+      background: linear-gradient(var(--accent), var(--timeline-fade));
+    }
+
+    .timeline li {
+      position: relative;
+      display: grid;
+      gap: 4px;
+    }
+
+    .timeline li::before {
+      content: "";
+      position: absolute;
+      left: -18px;
+      top: 8px;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 0 5px var(--accent-soft);
+    }
+
+    .timeline strong {
+      font-weight: 600;
+      font-size: 1rem;
+    }
+
+    .timeline span,
+    .timeline small,
+    .achievement-item p,
+    .research-item p,
+    .research-meta {
+      color: var(--muted);
+    }
+
+    .timeline small {
+      line-height: 1.5;
+    }
+
+    .achievement-list,
+    .research-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .achievement-list {
+      min-height: 0;
+      overflow-y: hidden;
+      padding-right: 4px;
+      scrollbar-gutter: stable;
+    }
+
+    .achievement-item,
+    .research-item {
+      padding: 14px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, var(--item-bg-start), var(--item-bg-end));
+    }
+
+    .achievement-item,
+    .research-item {
+      display: grid;
+      gap: 10px;
+    }
+
+    .achievement-head,
+    .research-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .achievement-summary,
+    .research-summary {
+      min-width: 0;
+      flex: 1;
+    }
+
+    .achievement-item strong,
+    .research-item strong {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 1rem;
+    }
+
+    .achievement-summary strong,
+    .research-summary strong {
+      margin-bottom: 0;
+      font-size: 0.9rem;
+      line-height: 1.35;
+    }
+
+    .achievement-summary strong {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .research-summary strong {
+      white-space: normal;
+      overflow: visible;
+      text-overflow: clip;
+    }
+
+    .achievement-toggle,
+    .research-toggle {
+      flex: 0 0 auto;
+      padding: 7px 10px;
+      border: 1px solid var(--chip-border);
+      border-radius: 999px;
+      background: var(--chip-bg);
+      color: var(--ink);
+      font: inherit;
+      font-size: 0.76rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .achievement-toggle:hover,
+    .research-toggle:hover {
+      background: var(--chip-hover);
+    }
+
+    .achievement-item p,
+    .research-item p {
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    .achievement-detail,
+    .research-detail {
+      display: grid;
+      gap: 10px;
+      padding-top: 10px;
+      border-top: 1px solid var(--line);
+    }
+
+    .research-detail p {
+      color: var(--ink);
+      font-size: 1.02rem;
+      line-height: 1.72;
+    }
+
+    .research-detail strong {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 7px;
+      color: var(--ink);
+      font-size: 0.92rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
+    .research-detail strong::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: currentColor;
+      flex: 0 0 7px;
+    }
+
+    .achievement-detail[hidden],
+    .research-detail[hidden] {
+      display: none;
+    }
+
+    .achievement-download {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: fit-content;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: var(--accent);
+      color: var(--download-text);
+      text-decoration: none;
+      font-size: 0.84rem;
+      font-weight: 600;
+    }
+
+    .achievement-downloads,
+    .research-downloads {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .research-meta {
+      margin: 4px 0 0;
+      font-size: 0.84rem;
+      line-height: 1.5;
+    }
+
+    .research-keywords {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 8px;
+    }
+
+    .research-keywords span {
+      display: inline-flex;
+      align-items: center;
+      padding: 5px 10px;
+      border: 1px solid var(--chip-border);
+      border-radius: 999px;
+      background: var(--chip-bg);
+      color: var(--muted);
+      font-size: 0.72rem;
+      line-height: 1.35;
+    }
+
+    .research-panel {
+      margin-top: 0;
+      min-height: 0;
+      display: grid;
+      grid-template-rows: auto auto;
+      align-content: start;
+      animation-delay: 0.14s;
+      overflow-y: hidden;
+    }
+
+    .profile-panel { animation-delay: 0.04s; }
+    .education-panel { animation-delay: 0.08s; }
+    .achievement-panel {
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr);
+      align-content: start;
+      animation-delay: 0.12s;
+      overflow: hidden;
+    }
+    .achievement-panel.is-scrollable .achievement-list { overflow-y: auto; }
+    .research-panel.is-scrollable { overflow-y: auto; }
+
+    @keyframes rise {
+      from {
+        opacity: 0;
+        transform: translateY(24px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 960px) {
+      body {
+        overflow-y: auto;
+      }
+
+      .card-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .page {
+        height: auto;
+        min-height: 100vh;
+        min-height: 100dvh;
+      }
+
+      .card {
+        display: block;
+        height: auto;
+        overflow: visible;
+      }
+
+      .profile-panel {
+        grid-column: 1 / -1;
+      }
+
+      .profile-header {
+        grid-template-columns: minmax(160px, 182px) minmax(0, 1fr);
+      }
+
+      .profile-panel .contact-list {
+        grid-template-columns: 1fr;
+      }
+
+    }
+
+    @media (max-width: 640px) {
+      .theme-toggle {
+        top: 12px;
+        right: 12px;
+        width: 160px;
+      }
+
+      .theme-toggle-label {
+        font-size: 0.68rem;
+      }
+
+      .page {
+        width: min(1720px, calc(100% - 4px));
+        padding: 4px 0;
+      }
+
+      .card-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .panel {
+        padding: 16px;
+      }
+
+      .profile-header {
+        grid-template-columns: 1fr;
+      }
+
+      .portrait {
+        height: auto;
+        aspect-ratio: 413 / 531;
+        max-width: 188px;
+      }
+
+      .profile-panel .contact-list {
+        grid-template-columns: 1fr;
+        width: 100%;
+      }
+
+    }
+  </style>
+</head>
+<body>
+  <button class="theme-toggle" type="button" data-theme="monochrome" aria-label="Switch to original color theme">
+    <span class="theme-toggle-label theme-toggle-label-light">Original</span>
+    <span class="theme-toggle-label theme-toggle-label-dark">B/W</span>
+  </button>
+  <main class="page">
+    <section class="card" aria-label="포트폴리오 카드">
+      <div class="card-grid">
+        <section class="panel profile-panel"></section>
+        <section class="panel education-panel"></section>
+        <section class="panel achievement-panel"></section>
+      </div>
+      <section class="panel research-panel"></section>
+    </section>
+  </main>
+  <script>
+    (function () {
+      const themeToggle = document.querySelector(".theme-toggle");
+      const panels = {
+        profile: document.querySelector(".profile-panel"),
+        education: document.querySelector(".education-panel"),
+        achievements: document.querySelector(".achievement-panel"),
+        research: document.querySelector(".research-panel")
+      };
+      const themeStorageKey = "portfolio-theme";
+      const toggleLabels = {
+        expand: "더보기",
+        collapse: "닫기"
+      };
+      const content = {
+        profile: {
+          title: "Profile",
+          image: {
+            src: "%EC%A6%9D%EB%AA%85%EC%82%AC%EC%A7%84.jpg",
+            alt: "Jung Dae Hyeon profile photo"
+          },
+          name: "정 대 현",
+          nameEn: "Jung Dae Hyeon",
+          keywords: ["Aerospace", "Drone Vision", "UAV", "Mechanical Systems"],
+          contacts: [
+            { label: "EMAIL", value: "jdh9393@naver.com" },
+            {
+              label: "GITHUB",
+              value: "github.com/DaeHyeonJung",
+              href: "https://github.com/DaeHyeonJung"
+            },
+            {
+              label: "INTRO-LAB",
+              value: "www.intro-lab.com",
+              href: "https://www.intro-lab.com/"
+            }
+          ]
+        },
+        education: {
+          title: "Academic Timeline",
+          items: [
+            {
+              name: "부흥고등학교",
+              period: "2017 ~ 2019",
+              detail: "고등학교"
+            },
+            {
+              name: "청주대학교",
+              period: "2020 ~ 2026",
+              detail: "무인항공기학과<br>Total GPA &ensp; 4.22/4.5"
+            },
+            {
+              name: "청주대학교 대학원",
+              period: "2026 ~ ",
+              detail: "기계항공시스템공학과"
+            }
+          ]
+        },
+        achievements: {
+          title: "Achievements",
+          subtitle: "대회 활동 및 수상 내역",
+          items: [
+            {
+              title: "2024 K-UAM 기술개발 경연대회",
+              award: "캠틱종합기술원장상 장려상",
+              downloads: [
+                {
+                  href: "2024 K-UAM 경연개발대회/최종보고서.pdf",
+                  label: "최종보고서 PDF"
+                },
+                {
+                  href: "2024 K-UAM 경연개발대회/실내비행영상.mp4",
+                  label: "실내 비행 영상"
+                },
+                {
+                  href: "2024 K-UAM 경연개발대회/실외비행영상.mp4",
+                  label: "실외 비행 영상"
+                }
+              ]
+            },
+            {
+              title: "2024학년도 대학혁신지원사업 융복합교과목 성과경진대회",
+              award: "장려상",
+              downloads: []
+            },
+            {
+              title: "2025 전국 대학생 UAM 올림피아드 - 기체창작부분",
+              award: "장려상",
+              downloads: [
+                {
+                  href: "2025 UAM올림피아드/UAM 올림피아드 최종 보고서.pdf",
+                  label: "UAM 올림피아드 최종보고서"
+                },
+                {
+                  href: "2025 UAM올림피아드/기체 렌더링.jpg",
+                  label: "기체 렌더링"
+                },
+                {
+                  href: "2025 UAM올림피아드/시험비행영상.mp4",
+                  label: "시험비행영상"
+                },
+                {
+                  href: "https://youtu.be/gc52CRBMOYQ",
+                  label: "국토교통부 영상",
+                  external: true
+                }
+              ]
+            }
+          ]
+        },
+        research: {
+          title: "Research & Papers",
+          subtitle: "학회 활동 및 논문 내역",
+          items: [
+            {
+              title: "창고 관리 드론의 비상 착륙을 위한 영상 기반 안전 착륙 영역 인식",
+              meta: "학부 졸업 논문 / 2025.05 ~ 2025.11",
+              keywords: [
+                "Indoor Drone (실내드론)",
+                "Landing zone recognition (착륙 영역 인식)",
+                "Deep Learning (딥러닝)",
+                "Semantic Segmentation (의미론적 분할)"
+              ],
+              details: [
+                "<strong>연구 배경</strong>GPS 신호 수신이 어렵고 장애물이 밀집한 실내 물류창고 환경에서는 드론의 비상착륙 지점을 실시간으로 판단하는 기술이 필요함.",
+                "<strong>주요 수행 내용</strong>Blender 기반 가상 창고 환경을 직접 구축하여 합성 데이터를 생성하고 U-Net 기반 semantic segmentation으로 착륙 가능 영역과 장애물을 픽셀 단위로 분할함.<br>이후 장애물 거리와 드론 중심으로부터의 이동 효율을 함께 반영한 점수 기반 알고리즘을 설계하여 최적 비상착륙 지점을 추정함.",
+                "<strong>결과</strong>가상환경 실험에서 mean IoU 약 0.82, Pixel Accuracy 약 0.995 수준의 분할 성능을 확보했으며 다양한 장애물 배치 상황에서도 안전성과 효율성을 고려한 착륙 지점을 일관되게 도출함."
+              ],
+              links: [
+                {
+                  href: "논문 및 학회 내역/1/학부졸업논문.pdf",
+                  label: "학부 졸업 논문 PDF"
+                },
+                {
+                  href: "논문 및 학회 내역/1/추계시스템학회 포스터-정대현.pdf",
+                  label: "항공우주시스템공학학회 2025년도 추계학술대회 포스터"
+                }
+              ]
+            },
+            {
+              title: "논문 또는 프로젝트 02",
+              meta: "논문 제목 / 학회 또는 게재 정보",
+              details: [
+                "논문 제목, 발표 학회, 게재지, 연도 등 핵심 메타 정보를 적어주세요.",
+                "요약, 기여도, 사용 기술을 간단히 추가하면 논문 내역을 보기 쉬워집니다."
+              ]
+            },
+            {
+              title: "후속 연구 03",
+              meta: "진행 중인 주제 / 확장 계획",
+              details: [
+                "현재 진행 중인 시뮬레이션, 테스트, 데이터 수집 내용을 정리해주세요.",
+                "향후 확장 계획이나 기대 효과를 함께 적으면 석사 연구 흐름이 자연스럽게 연결됩니다."
+              ]
+            }
+          ]
+        }
+      };
+
+      const applyTheme = (theme) => {
+        const nextTheme = theme === "light" ? "light" : "monochrome";
+        document.body.dataset.theme = nextTheme;
+
+        if (themeToggle) {
+          themeToggle.dataset.theme = nextTheme;
+          themeToggle.setAttribute(
+            "aria-label",
+            nextTheme === "light" ? "Switch to black and white theme" : "Switch to original color theme"
+          );
+        }
+      };
+      const renderSectionTitle = (title, subtitle = "") => `
+        <h3 class="section-title">
+          <span>${title}</span>
+          ${subtitle ? `<span>${subtitle}</span>` : ""}
+        </h3>
+      `;
+      const renderContact = ({ label, value, href }) => `
+        <div class="contact-item">
+          <strong>${label}</strong>
+          ${href
+            ? `<a class="contact-value" href="${href}" target="_blank" rel="noopener noreferrer">${value}</a>`
+            : `<span class="contact-value">${value}</span>`
+          }
+        </div>
+      `;
+      const renderResourceLinks = (items, className, mode = "download") => {
+        if (!items || !items.length) {
+          return "";
+        }
+
+        return `
+          <div class="${className}">
+            ${items.map((item) => {
+              const href = item.external ? item.href : encodeURI(item.href);
+              const attrs = item.external || mode === "blank"
+                ? `target="_blank" rel="noopener noreferrer"`
+                : `download`;
+              return `<a class="achievement-download" href="${href}" ${attrs}>${item.label || "파일 다운로드"}</a>`;
+            }).join("")}
+          </div>
+        `;
+      };
+      const renderToggleButton = (className, detailId) => `
+        <button class="${className}" type="button" aria-expanded="false" aria-controls="${detailId}">
+          ${toggleLabels.expand}
+        </button>
+      `;
+      const renderProfile = ({ title, image, name, nameEn, keywords, contacts }) => `
+        ${renderSectionTitle(title)}
+        <div class="profile-header">
+          <div class="portrait">
+            <img src="${image.src}" alt="${image.alt}">
+          </div>
+          <div class="identity">
+            <h2>${name}</h2>
+            <div class="identity-name-en">${nameEn}</div>
+            <div class="profile-keywords-list" aria-label="Keywords">
+              ${keywords.map((keyword) => `<span>${keyword}</span>`).join("")}
+            </div>
+            <div class="contact-list">
+              ${contacts.map(renderContact).join("")}
+            </div>
+          </div>
+        </div>
+      `;
+      const renderEducation = ({ title, items }) => `
+        ${renderSectionTitle(title)}
+        <ol class="timeline">
+          ${items.map((item) => `
+            <li>
+              <strong>${item.name}</strong>
+              <span>${item.period}</span>
+              <small>${item.detail}</small>
+            </li>
+          `).join("")}
+        </ol>
+      `;
+      const renderAchievements = ({ title, subtitle, items }) => `
+        ${renderSectionTitle(title, subtitle)}
+        <div class="achievement-list">
+          ${items.map((item, index) => {
+            const detailId = `achievement-detail-${index}`;
+            const hasDownloads = Boolean(item.downloads && item.downloads.length);
+            return `
+              <article class="achievement-item">
+                <div class="achievement-head">
+                  <div class="achievement-summary">
+                    <strong>${item.title} - ${item.award}</strong>
+                  </div>
+                  ${hasDownloads ? renderToggleButton("achievement-toggle", detailId) : ""}
+                </div>
+                ${hasDownloads
+                  ? `<div class="achievement-detail" id="${detailId}" hidden>
+                      ${renderResourceLinks(item.downloads, "achievement-downloads")}
+                    </div>`
+                  : ""
+                }
+              </article>
+            `;
+          }).join("")}
+        </div>
+      `;
+      const renderResearch = ({ title, subtitle, items }) => `
+        ${renderSectionTitle(title, subtitle)}
+        <div class="research-list">
+          ${items.map((item, index) => {
+            const detailId = `research-detail-${index}`;
+            return `
+              <article class="research-item">
+                <div class="research-head">
+                  <div class="research-summary">
+                    <strong>${item.title}</strong>
+                    <p class="research-meta">${item.meta}</p>
+                    ${item.keywords && item.keywords.length
+                      ? `<div class="research-keywords">${item.keywords.map((keyword) => `<span>${keyword}</span>`).join("")}</div>`
+                      : ""
+                    }
+                  </div>
+                  ${renderToggleButton("research-toggle", detailId)}
+                </div>
+                <div class="research-detail" id="${detailId}" hidden>
+                  ${item.details.map((detail) => `<p>${detail}</p>`).join("")}
+                  ${renderResourceLinks(item.links, "research-downloads", "blank")}
+                </div>
+              </article>
+            `;
+          }).join("")}
+        </div>
+      `;
+      const setExpandedState = (button, detail, expanded) => {
+        button.setAttribute("aria-expanded", String(expanded));
+        button.textContent = expanded ? toggleLabels.collapse : toggleLabels.expand;
+        detail.hidden = !expanded;
+      };
+      const readStoredTheme = () => {
+        try {
+          return localStorage.getItem(themeStorageKey);
+        } catch (error) {
+          return null;
+        }
+      };
+      const writeStoredTheme = (theme) => {
+        try {
+          localStorage.setItem(themeStorageKey, theme);
+        } catch (error) {
+          // Ignore storage access failures and keep the theme in memory.
+        }
+      };
+
+      applyTheme(readStoredTheme() || "monochrome");
+
+      if (themeToggle) {
+        themeToggle.addEventListener("click", () => {
+          const currentTheme = document.body.dataset.theme === "light" ? "light" : "monochrome";
+          const nextTheme = currentTheme === "light" ? "monochrome" : "light";
+          applyTheme(nextTheme);
+          writeStoredTheme(nextTheme);
+        });
+      }
+
+      const setupExpandablePanel = (panel, detailSelector, buttonSelector, options = {}) => {
+        const { lockHeight = false } = options;
+
+        const lockPanelHeight = () => {
+          if (!lockHeight) {
+            return;
+          }
+
+          const states = Array.from(panel.querySelectorAll(buttonSelector)).map((button) => {
+            const detailId = button.getAttribute("aria-controls");
+            return {
+              button,
+              detail: panel.querySelector(`#${detailId}`),
+              expanded: button.getAttribute("aria-expanded") === "true"
+            };
+          }).filter(({ detail }) => Boolean(detail));
+
+          panel.style.height = "";
+          panel.style.maxHeight = "";
+
+          states.forEach(({ button, detail }) => {
+            setExpandedState(button, detail, false);
+          });
+
+          const lockedHeight = Math.ceil(panel.getBoundingClientRect().height);
+
+          states.forEach(({ button, detail, expanded }) => {
+            setExpandedState(button, detail, expanded);
+          });
+
+          if (lockedHeight > 0) {
+            panel.style.height = `${lockedHeight}px`;
+            panel.style.maxHeight = `${lockedHeight}px`;
+          }
+        };
+
+        const updatePanelScrollState = () => {
+          const hasExpandedDetail = Boolean(
+            panel.querySelector(`${detailSelector}:not([hidden])`)
+          );
+          const hasOverflow = hasExpandedDetail && panel.scrollHeight > panel.clientHeight + 4;
+          panel.classList.toggle("is-scrollable", hasOverflow);
+
+          if (!hasOverflow) {
+            panel.scrollTop = 0;
+          }
+        };
+        const handleResize = () => {
+          lockPanelHeight();
+          updatePanelScrollState();
+        };
+
+        handleResize();
+        window.addEventListener("resize", handleResize);
+
+        if (lockHeight && document.fonts && document.fonts.ready) {
+          document.fonts.ready.then(handleResize);
+        }
+
+        panel.addEventListener("click", (event) => {
+          const button = event.target.closest(buttonSelector);
+          if (!button || !panel.contains(button)) {
+            return;
+          }
+
+          const detailId = button.getAttribute("aria-controls");
+          const detail = panel.querySelector(`#${detailId}`);
+          if (!detail) {
+            return;
+          }
+
+          const isExpanded = button.getAttribute("aria-expanded") === "true";
+          setExpandedState(button, detail, !isExpanded);
+          requestAnimationFrame(updatePanelScrollState);
+        });
+      };
+      const renderPanel = (panel, markup, expandableConfig) => {
+        if (!panel) {
+          return;
+        }
+
+        panel.innerHTML = markup;
+
+        if (expandableConfig) {
+          setupExpandablePanel(
+            panel,
+            expandableConfig.detailSelector,
+            expandableConfig.buttonSelector,
+            expandableConfig.options
+          );
+        }
+      };
+
+      renderPanel(panels.profile, renderProfile(content.profile));
+      renderPanel(panels.education, renderEducation(content.education));
+      renderPanel(
+        panels.achievements,
+        renderAchievements(content.achievements),
+        {
+          detailSelector: ".achievement-detail",
+          buttonSelector: ".achievement-toggle",
+          options: { lockHeight: true }
+        }
+      );
+      renderPanel(
+        panels.research,
+        renderResearch(content.research),
+        {
+          detailSelector: ".research-detail",
+          buttonSelector: ".research-toggle",
+          options: {}
+        }
+      );
+    })();
+  </script>
+</body>
+</html>
