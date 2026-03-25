@@ -931,11 +931,11 @@
               ],
               links: [
                 {
-                  href: "학부졸업논문.pdf",
+                  href: "연구/1/학부졸업논문.pdf",
                   label: "학부 졸업 논문 PDF"
                 },
                 {
-                  href: "추계시스템학회 포스터.pdf",
+                  href: "연구/1/추계시스템학회 포스터.pdf",
                   label: "항공우주시스템공학학회 2025년도 추계학술대회 포스터"
                 }
               ]
@@ -987,6 +987,30 @@
           }
         </div>
       `;
+      const assetBasePath = (() => {
+        if (!window.location.hostname.endsWith("github.io")) {
+          return "";
+        }
+
+        const segments = window.location.pathname.split("/").filter(Boolean);
+        return segments.length ? `/${segments[0]}` : "";
+      })();
+      const toAssetHref = (path) => {
+        if (!path) {
+          return path;
+        }
+
+        if (/^(?:[a-z]+:)?\/\//i.test(path) || path.startsWith("mailto:") || path.startsWith("tel:") || path.startsWith("#")) {
+          return path;
+        }
+
+        if (path.startsWith("/")) {
+          return encodeURI(path);
+        }
+
+        const encodedPath = encodeURI(path);
+        return assetBasePath ? `${assetBasePath}/${encodedPath}` : encodedPath;
+      };
       const renderResourceLinks = (items, className, mode = "download") => {
         if (!items || !items.length) {
           return "";
@@ -995,7 +1019,7 @@
         return `
           <div class="${className}">
             ${items.map((item) => {
-              const href = item.external ? item.href : encodeURI(item.href);
+              const href = item.external ? item.href : toAssetHref(item.href);
               const attrs = item.external || mode === "blank"
                 ? `target="_blank" rel="noopener noreferrer"`
                 : `download`;
@@ -1013,7 +1037,7 @@
         ${renderSectionTitle(title)}
         <div class="profile-header">
           <div class="portrait">
-            <img src="${image.src}" alt="${image.alt}">
+            <img src="${toAssetHref(image.src)}" alt="${image.alt}">
           </div>
           <div class="identity">
             <h2>${name}</h2>
