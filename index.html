@@ -115,6 +115,13 @@
       height: 100%;
     }
 
+    img,
+    video {
+      display: block;
+      max-width: 100%;
+      height: auto;
+    }
+
     body {
       margin: 0;
       min-height: 100vh;
@@ -256,6 +263,7 @@
     .panel {
       position: relative;
       overflow: hidden;
+      min-width: 0;
       min-height: 0;
       padding: 18px;
       border: 1px solid var(--line);
@@ -513,6 +521,7 @@
 
     .achievement-item,
     .research-item {
+      min-width: 0;
       padding: 14px;
       border-radius: var(--radius-md);
       border: 1px solid var(--line);
@@ -636,6 +645,7 @@
       align-items: center;
       justify-content: center;
       width: fit-content;
+      max-width: 100%;
       padding: 8px 12px;
       border-radius: 999px;
       background: var(--accent);
@@ -643,6 +653,10 @@
       text-decoration: none;
       font-size: 0.84rem;
       font-weight: 600;
+      line-height: 1.45;
+      text-align: center;
+      white-space: normal;
+      overflow-wrap: anywhere;
     }
 
     .achievement-downloads,
@@ -675,6 +689,8 @@
       color: var(--muted);
       font-size: 0.8rem;
       line-height: 1.35;
+      max-width: 100%;
+      overflow-wrap: anywhere;
     }
 
     .research-downloads .achievement-download {
@@ -749,7 +765,7 @@
 
     }
 
-    @media (max-width: 640px) {
+    @media (max-width: 768px) {
       .theme-toggle {
         top: 12px;
         right: 12px;
@@ -762,33 +778,203 @@
       }
 
       .page {
-        width: min(1720px, calc(100% - 4px));
-        padding: 4px 0;
+        width: min(1720px, calc(100% - 24px));
+        padding: 72px 0 16px;
       }
 
-      .card-grid {
-        grid-template-columns: 1fr;
+      .card {
+        gap: 12px;
+        padding: 12px;
+        border-radius: 24px;
       }
 
       .panel {
         padding: 16px;
       }
 
-      .profile-header {
+      .card-grid {
         grid-template-columns: 1fr;
       }
 
+      .profile-header {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+
+      .profile-panel {
+        gap: 12px;
+      }
+
       .portrait {
-        height: auto;
         aspect-ratio: 413 / 531;
-        max-width: 188px;
+        width: min(100%, 240px);
+        justify-self: center;
+      }
+
+      .identity {
+        gap: 8px;
+        padding: 0;
+      }
+
+      .identity h2 {
+        font-size: clamp(1.42rem, 6vw, 1.78rem);
+        line-height: 1.08;
+      }
+
+      .identity-name-en {
+        font-size: 0.76rem;
+        letter-spacing: 0.05em;
+      }
+
+      .profile-keywords-list {
+        gap: 6px 8px;
+      }
+
+      .profile-keywords-list span {
+        font-size: 0.75rem;
+        white-space: normal;
+        overflow-wrap: anywhere;
       }
 
       .profile-panel .contact-list {
         grid-template-columns: 1fr;
         width: 100%;
+        margin-left: 0;
       }
 
+      .contact-item {
+        padding: 10px 12px;
+        font-size: 0.8rem;
+      }
+
+      .section-title {
+        gap: 6px;
+        margin-bottom: 12px;
+        flex-wrap: wrap;
+        align-items: flex-start;
+        font-size: 0.9rem;
+      }
+
+      .section-title span:last-child {
+        width: 100%;
+        font-size: 0.72rem;
+      }
+
+      .timeline {
+        padding-left: 16px;
+        gap: 14px;
+      }
+
+      .education-panel .timeline {
+        gap: 14px;
+      }
+
+      .timeline strong {
+        font-size: 0.95rem;
+      }
+
+      .timeline small {
+        font-size: 0.88rem;
+      }
+
+      .achievement-panel,
+      .research-panel {
+        height: auto !important;
+        max-height: none !important;
+        overflow: visible;
+      }
+
+      .achievement-panel.is-scrollable .achievement-list,
+      .research-panel.is-scrollable {
+        overflow: visible;
+      }
+
+      .achievement-list,
+      .research-list {
+        gap: 12px;
+      }
+
+      .achievement-item,
+      .research-item {
+        padding: 12px;
+        gap: 12px;
+      }
+
+      .achievement-head,
+      .research-head {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+      }
+
+      .achievement-summary strong,
+      .research-summary strong {
+        white-space: normal;
+        overflow: visible;
+        text-overflow: clip;
+        line-height: 1.45;
+      }
+
+      .achievement-toggle,
+      .research-toggle {
+        width: 100%;
+        padding: 10px 12px;
+      }
+
+      .achievement-detail,
+      .research-detail {
+        gap: 12px;
+        padding-top: 12px;
+      }
+
+      .achievement-downloads,
+      .research-downloads {
+        display: grid;
+        grid-template-columns: 1fr;
+      }
+
+      .achievement-download {
+        width: 100%;
+        padding: 10px 12px;
+      }
+
+      .research-meta {
+        font-size: 0.88rem;
+      }
+
+      .research-detail p {
+        font-size: 1rem;
+        line-height: 1.7;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .page {
+        width: min(1720px, calc(100% - 16px));
+        padding-top: 68px;
+      }
+
+      .card {
+        padding: 10px;
+      }
+
+      .panel {
+        padding: 14px;
+      }
+
+      .portrait {
+        width: min(100%, 208px);
+      }
+
+      .identity h2 {
+        font-size: clamp(1.34rem, 7vw, 1.6rem);
+      }
+
+      .achievement-toggle,
+      .research-toggle,
+      .achievement-download {
+        font-size: 0.78rem;
+      }
     }
   </style>
 </head>
