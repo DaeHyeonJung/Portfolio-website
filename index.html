@@ -346,6 +346,7 @@
       flex-direction: column;
       gap: 6px;
       min-height: 0;
+      min-width: 0;
     }
 
     .identity h2 {
@@ -376,10 +377,6 @@
 
     .profile-keywords-list span {
       white-space: nowrap;
-    }
-
-    .profile-keywords-list span:not(:last-child)::after {
-      content: " \00B7 ";
     }
 
     .contact-list {
@@ -841,6 +838,8 @@
 
       .profile-keywords-list span {
         font-size: 0.75rem;
+        white-space: normal;
+        overflow-wrap: anywhere;
       }
 
       .profile-panel .contact-list {
@@ -1051,7 +1050,7 @@
             {
               name: "청주대학교",
               period: "2020 ~ 2026",
-              detail: "무인항공기학과<br>Total GPA :&ensp; 4.22/4.5"
+              detail: "무인항공기학과<br>Total GPA : 4.22/4.5"
             },
             {
               name: "청주대학교 대학원",
@@ -1256,7 +1255,7 @@
               <h2>${name}</h2>
               <div class="identity-name-en">${nameEn}</div>
               <div class="profile-keywords-list" aria-label="Keywords">
-                ${keywords.map((keyword) => `<span>${keyword}</span>`).join("")}
+                ${keywords.map((keyword, index) => `<span>${keyword}${index < keywords.length - 1 ? " \u00B7" : ""}</span>`).join(" ")}
               </div>
             </div>
             <div class="contact-list">
