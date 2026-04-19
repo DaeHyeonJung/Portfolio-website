@@ -341,6 +341,13 @@
       padding: 1px 0 0 6px;
     }
 
+    .identity-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      min-height: 0;
+    }
+
     .identity h2 {
       margin: 0;
       font-family: "Paperlogy", "Noto Sans KR", "Malgun Gothic", sans-serif;
@@ -797,8 +804,9 @@
       }
 
       .profile-header {
-        grid-template-columns: 1fr;
-        gap: 16px;
+        grid-template-columns: minmax(108px, 132px) minmax(0, 1fr);
+        gap: 12px;
+        align-items: center;
       }
 
       .profile-panel {
@@ -807,11 +815,15 @@
 
       .portrait {
         aspect-ratio: 413 / 531;
-        width: min(100%, 240px);
-        justify-self: center;
+        width: min(100%, 132px);
+        justify-self: start;
       }
 
       .identity {
+        display: contents;
+      }
+
+      .identity-meta {
         gap: 8px;
         padding: 0;
       }
@@ -840,6 +852,8 @@
         grid-template-columns: 1fr;
         width: 100%;
         margin-left: 0;
+        margin-top: 2px;
+        grid-column: 1 / -1;
       }
 
       .contact-item {
@@ -1243,10 +1257,12 @@
             <img src="${toAssetHref(image.src)}" alt="${image.alt}">
           </div>
           <div class="identity">
-            <h2>${name}</h2>
-            <div class="identity-name-en">${nameEn}</div>
-            <div class="profile-keywords-list" aria-label="Keywords">
-              ${keywords.map((keyword) => `<span>${keyword}</span>`).join("")}
+            <div class="identity-meta">
+              <h2>${name}</h2>
+              <div class="identity-name-en">${nameEn}</div>
+              <div class="profile-keywords-list" aria-label="Keywords">
+                ${keywords.map((keyword) => `<span>${keyword}</span>`).join("")}
+              </div>
             </div>
             <div class="contact-list">
               ${contacts.map(renderContact).join("")}
