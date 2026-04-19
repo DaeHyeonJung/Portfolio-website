@@ -367,18 +367,19 @@
     }
 
     .profile-keywords-list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 3px 10px;
       margin-top: 2px;
+      color: var(--muted);
+      font-size: 0.78rem;
+      line-height: 1.45;
+      letter-spacing: 0.04em;
     }
 
     .profile-keywords-list span {
-      color: var(--muted);
-      font-size: 0.78rem;
-      line-height: 1.18;
-      letter-spacing: 0.04em;
       white-space: nowrap;
+    }
+
+    .profile-keywords-list span:not(:last-child)::after {
+      content: " \00B7 ";
     }
 
     .contact-list {
@@ -838,14 +839,8 @@
         letter-spacing: 0.05em;
       }
 
-      .profile-keywords-list {
-        gap: 6px 8px;
-      }
-
       .profile-keywords-list span {
         font-size: 0.75rem;
-        white-space: normal;
-        overflow-wrap: anywhere;
       }
 
       .profile-panel .contact-list {
@@ -1056,7 +1051,7 @@
             {
               name: "청주대학교",
               period: "2020 ~ 2026",
-              detail: "무인항공기학과<br>Total GPA &ensp; 4.22/4.5"
+              detail: "무인항공기학과<br>Total GPA :&ensp; 4.22/4.5"
             },
             {
               name: "청주대학교 대학원",
