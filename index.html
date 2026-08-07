@@ -48,7 +48,6 @@
       --panel-bg-start: rgba(19, 19, 19, 0.92);
       --panel-bg-end: rgba(11, 11, 11, 0.86);
       --panel-inner-line: rgba(255, 255, 255, 0.04);
-      --panel-glow: rgba(255, 255, 255, 0.06);
       --portrait-border: rgba(255, 255, 255, 0.12);
       --portrait-bg-start: rgba(28, 28, 28, 0.94);
       --portrait-bg-end: rgba(12, 12, 12, 0.9);
@@ -90,7 +89,6 @@
       --panel-bg-start: rgba(248, 251, 253, 0.88);
       --panel-bg-end: rgba(236, 242, 246, 0.78);
       --panel-inner-line: rgba(255, 255, 255, 0.45);
-      --panel-glow: rgba(95, 118, 140, 0.09);
       --portrait-border: rgba(84, 98, 113, 0.18);
       --portrait-bg-start: rgba(255, 255, 255, 0.82);
       --portrait-bg-end: rgba(239, 244, 248, 0.72);
@@ -273,17 +271,6 @@
       animation: rise 0.9s ease both;
     }
 
-    .panel::after {
-      content: "";
-      position: absolute;
-      inset: auto -40px -40px auto;
-      width: 120px;
-      height: 120px;
-      border-radius: 50%;
-      background: radial-gradient(circle, var(--panel-glow), transparent 68%);
-      pointer-events: none;
-    }
-
     .profile-panel {
       display: grid;
       grid-template-rows: auto minmax(0, 1fr);
@@ -294,6 +281,14 @@
     .profile-panel .section-title {
       margin-bottom: 0;
       font-size: 1.04rem;
+    }
+
+    body[data-theme="monochrome"] .profile-panel .section-title,
+    body[data-theme="monochrome"] .identity h2,
+    body[data-theme="monochrome"] .identity-name-en,
+    body[data-theme="monochrome"] .contact-item strong {
+      color: #ffffff;
+      text-shadow: 0 0 16px rgba(255, 255, 255, 0.16);
     }
 
     .profile-header {
@@ -537,6 +532,10 @@
     .research-item {
       display: grid;
       gap: 10px;
+    }
+
+    .achievement-item {
+      min-height: 59px;
     }
 
     .achievement-head,
@@ -1035,7 +1034,7 @@
           },
           name: "정 대 현",
           nameEn: "Jung Dae Hyeon",
-          keywords: ["Aerospace", "Drone Vision", "UAV", "Mechanical Systems"],
+          keywords: ["Aerospace", "Drone Vision", "UAV", "Mechanical Systems", "AI"],
           contacts: [
             { label: "EMAIL", value: "jdh9393@naver.com" },
             {
@@ -1065,7 +1064,7 @@
             },
             {
               name: "청주대학교 대학원",
-              period: "2026 ~ ",
+              period: "2026 ~ 2028",
               detail: "기계항공시스템공학과"
             }
           ]
@@ -1127,6 +1126,19 @@
                   label: "수상증빙사진"
                 }
               ]
+            },
+            {
+              title: "2026 한국 로봇항공기 경연대회 - 정규부문",
+              downloads: [
+                {
+                  href: "2026 한국로봇항공기 경연대회/예선 및 기체 심사.jpg",
+                  label: "예선 및 기체 심사"
+                },
+                {
+                  href: "2026 한국로봇항공기 경연대회/기술개발보고서.pdf",
+                  label: "기술개발보고서 PDF"
+                }
+              ]
             }
           ]
         },
@@ -1186,8 +1198,26 @@
               ]
             },
             {
+              title: "소형 드론을 이용한 심층 신경망 기반 지상 표적 탐지 및 실시간 비주얼 서보인 연구",
+              meta: "2026 항공우주시스템공학회 추계학술대회 / 2026.09.16 ~ 2026.09.18",
+              keywords: [
+                "Small UAV(소형 드론)",
+                "Object Detection(객체 탐지)",
+                "Visual Servoing(비주얼 서보잉)",
+                "Deep Neural Network(심층 신경망)",
+                "Target Tracking(표적 추적)"
+              ],
+              details: [],
+              links: [
+                {
+                  href: "연구/3/논문.hwp",
+                  label: "항공우주시스템공학회 2026 추계학술대회 논문 HWP"
+                }
+              ]
+            },
+            {
               title: "가상환경 기반 군 차량 인식 및 의미론적 분할을 통한 타격 지점 추정 연구",
-              meta: "진행중 / 2026.02 ~",
+              meta: "진행중 / 2026.09 ~",
               details: []
             }
           ]
@@ -1319,7 +1349,7 @@
               <article class="achievement-item">
                 <div class="achievement-head">
                   <div class="achievement-summary">
-                    <strong>${item.title} - ${item.award}</strong>
+                    <strong>${item.title}${item.award ? ` - ${item.award}` : ""}</strong>
                   </div>
                   ${hasDownloads ? renderToggleButton("achievement-toggle", detailId) : ""}
                 </div>
@@ -1438,7 +1468,21 @@
             setExpandedState(button, detail, false);
           });
 
-          const lockedHeight = Math.ceil(panel.getBoundingClientRect().height);
+          const panelTop = panel.getBoundingClientRect().top;
+          const siblingPanels = panel.parentElement
+            ? Array.from(panel.parentElement.children).filter((candidate) =>
+                candidate !== panel &&
+                candidate.classList.contains("panel") &&
+                Math.abs(candidate.getBoundingClientRect().top - panelTop) < 2
+              )
+            : [];
+          const previousDisplay = panel.style.display;
+          panel.style.display = "none";
+          const lockedHeight = Math.ceil(Math.max(
+            0,
+            ...siblingPanels.map((candidate) => candidate.getBoundingClientRect().height)
+          ));
+          panel.style.display = previousDisplay;
 
           states.forEach(({ button, detail, expanded }) => {
             setExpandedState(button, detail, expanded);
@@ -1451,14 +1495,16 @@
         };
 
         const updatePanelScrollState = () => {
-          const hasExpandedDetail = Boolean(
-            panel.querySelector(`${detailSelector}:not([hidden])`)
+          const scrollTarget = lockHeight
+            ? panel.querySelector(".achievement-list")
+            : panel;
+          const hasOverflow = Boolean(
+            scrollTarget && scrollTarget.scrollHeight > scrollTarget.clientHeight + 4
           );
-          const hasOverflow = hasExpandedDetail && panel.scrollHeight > panel.clientHeight + 4;
           panel.classList.toggle("is-scrollable", hasOverflow);
 
-          if (!hasOverflow) {
-            panel.scrollTop = 0;
+          if (!hasOverflow && scrollTarget) {
+            scrollTarget.scrollTop = 0;
           }
         };
         const handleResize = () => {
